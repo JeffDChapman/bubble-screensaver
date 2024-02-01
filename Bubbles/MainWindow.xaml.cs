@@ -64,12 +64,21 @@ namespace Bubbles
                 rand.Next(0, (int) (bounds.Height - settings.RadiusMax)));
             var radius = rand.Next(settings.RadiusMin, settings.RadiusMax);
 
+            double sizeRatio = 1.00001 * settings.RadiusMax / settings.RadiusMin;
+            double relSize = 1.00001 * radius / settings.RadiusMax;
+            int myMinSpeed = Convert.ToInt16(settings.SpeedMin / relSize);
+            double speedRange = 1.00001 * settings.SpeedMax - settings.SpeedMin;
+            int myMaxSpeed = Convert.ToInt16(settings.SpeedMin + (speedRange / relSize / sizeRatio));
+            if (myMinSpeed > myMaxSpeed) { (myMinSpeed, myMaxSpeed) = (myMaxSpeed, myMinSpeed); }
+            double bubSpeed = rand.Next(myMinSpeed * 100, myMaxSpeed * 100) / 100.0;
+
+            //double bubSpeed = rand.Next(settings.SpeedMin * 100, settings.SpeedMax * 100) / 100.0;
+
             worker.AddElement(new UpdatableSphere(bounds,
                 CreateElement(color, radius, position), 
                 position,
-                new Vector(rand.NextDouble() - 0.5, rand.NextDouble() - 0.5), 
-                rand.Next(settings.SpeedMin * 100, settings.SpeedMax * 100) / 100.0,
-                radius)
+                new Vector(rand.NextDouble() - 0.5, rand.NextDouble() - 0.5),
+                bubSpeed, radius)
                 );
         }
 
