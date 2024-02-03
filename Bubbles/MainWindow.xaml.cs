@@ -72,8 +72,6 @@ namespace Bubbles
             if (myMinSpeed > myMaxSpeed) { (myMinSpeed, myMaxSpeed) = (myMaxSpeed, myMinSpeed); }
             double bubSpeed = rand.Next(myMinSpeed * 100, myMaxSpeed * 100) / 100.0;
 
-            //double bubSpeed = rand.Next(settings.SpeedMin * 100, settings.SpeedMax * 100) / 100.0;
-
             worker.AddElement(new UpdatableSphere(bounds,
                 CreateElement(color, radius, position), 
                 position,
@@ -117,8 +115,9 @@ namespace Bubbles
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (AppContext.BaseDirectory == BubblesSettings.SettingsDir) 
-                { LockWorkStation(); }
+            string setDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AppContext.BaseDirectory.Contains(setDir))
+               { LockWorkStation(); }
             Application.Current.Shutdown();
         }
 

@@ -7,11 +7,10 @@ namespace Bubbles
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        public BubblesSettings Settings { get; private set; }
+        public BubblesSettings Settings { get; set; }
 
         public SettingsWindow()
         {
-            Settings = BubblesSettings.Load(BubblesSettings.SettingsFile);
             InitializeComponent();
             DataContext = this;
         }
@@ -29,7 +28,7 @@ namespace Bubbles
             if (Settings.SpeedMin > Settings.SpeedMax)
                 Settings.SpeedMin = Settings.SpeedMax;
 
-            Settings.Save(BubblesSettings.SettingsFile);
+            Settings.Save(App.SettingsFile);
             Application.Current.Shutdown();
         }
     }

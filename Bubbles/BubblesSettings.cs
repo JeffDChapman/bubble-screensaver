@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -6,9 +7,6 @@ namespace Bubbles
 {
     public class BubblesSettings
     {
-        public const string SettingsDir = "C:\\Users\\JeffC\\Documents\\Visual Studio 2019\\Projects\\Bubbles\\Bubbles\\bin\\Debug\\";
-
-        public const string SettingsFile = SettingsDir + "BouncingBubbles.xml";
         public float PowerSavings { get; set; }
         public float BackgroundAlpha { get; set; }
         public int RadiusMin { get; set; }
@@ -21,8 +19,6 @@ namespace Bubbles
         public byte CenterTpcy { get; set; }
         public float EdgeRatio { get; set; }
 
-
- 
         /// <summary>
         /// Instantiate the class, loading settings from a specified file.
         /// If the file doesn't exist, use default values.
