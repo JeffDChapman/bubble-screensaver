@@ -7,10 +7,13 @@ namespace Bubbles
     public partial class App : Application
     {
         private MainWindow winSaver;
- 
+        public static string SettingsDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        public static string SettingsFile = "";
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var settings = BubblesSettings.Load(BubblesSettings.SettingsFile);
+            SettingsFile = SettingsDir + "BouncingBubbles.xml";
+            var settings = BubblesSettings.Load(SettingsFile);
 
             if (e.Args.Length == 0 || e.Args[0].ToLower().StartsWith("/s"))     
             {
@@ -45,6 +48,7 @@ namespace Bubbles
             else if (e.Args[0].ToLower().StartsWith("/c"))     
             {
                 SettingsWindow win = new SettingsWindow();
+                win.Settings = settings;
                 win.Show();
             }
             else
