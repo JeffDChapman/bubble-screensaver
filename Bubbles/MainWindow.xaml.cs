@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Bubbles.Elements;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Bubbles
 {
@@ -13,9 +14,11 @@ namespace Bubbles
         private Worker worker;
         private readonly BubblesSettings settings;
         private static Size minimumSize = new Size(400, 400);
+        private Process musicProcess;
         public const uint ES_CONTINUOUS = 0x80000000;
         public const uint ES_SYSTEM_REQUIRED = 0x00000001;
         public const uint ES_DISPLAY_REQUIRED = 0x00000002;
+        private readonly string musicLoc = "C:\\Users\\JeffC\\Documents\\Visual Studio 2019\\Projects\\PlayNotes\\bin\\Debug\\PlayNotes.exe";
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern uint SetThreadExecutionState([In] uint esFlags);
@@ -32,6 +35,9 @@ namespace Bubbles
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            try { musicProcess = Process.Start(musicLoc); }
+            catch { }
+
             Size bounds;
             if (double.IsNaN(Width))
             {
@@ -108,6 +114,7 @@ namespace Bubbles
         protected override void OnClosing(CancelEventArgs e)
         {
             worker.Stop();
+            try { musicProcess.Kill(); } catch { }
             SetThreadExecutionState(ES_CONTINUOUS);
 
             base.OnClosing(e);

@@ -12,7 +12,7 @@ namespace Bubbles
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            SettingsFile = SettingsDir + "BouncingBubbles.xml";
+            SettingsFile = SettingsDir + "\\BouncingBubbles.xml";
             var settings = BubblesSettings.Load(SettingsFile);
 
             if (e.Args.Length == 0 || e.Args[0].ToLower().StartsWith("/s"))     
